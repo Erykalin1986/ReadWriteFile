@@ -25,7 +25,7 @@ namespace Models
         /// <returns>Список пользователей.</returns>
         public List<User> GetAllUsers()
         {
-            string userJSON = ReadFile();
+            string userJSON = DBFile.ReadFile();
             List<User> users = JsonConvert.DeserializeObject<List<User>>(userJSON);
             return users ?? new List<User>();
         }
@@ -37,7 +37,7 @@ namespace Models
         /// <returns>Полученного пользователя.</returns>
         public User GetUserById(Guid id)
         {
-            string userJSON = ReadFile();
+            string userJSON = DBFile.ReadFile();
             return JsonConvert.DeserializeObject<List<User>>(userJSON).FirstOrDefault(f => f.Id == id);
         }
 
@@ -50,7 +50,7 @@ namespace Models
             List<User> users = GetAllUsers();
             List<User> overUsers = users.Where(u => u.Id != id).ToList();
             string serilizedUsers = JsonConvert.SerializeObject(overUsers, Formatting.Indented);
-            WriteFile(serilizedUsers);
+            DBFile.WriteFile(serilizedUsers);
         }
 
         /// <summary>
@@ -69,27 +69,7 @@ namespace Models
             List<User> currentAllUsers = this.GetAllUsers();
             currentAllUsers.Add(user);
             string serilizedUsers = JsonConvert.SerializeObject(currentAllUsers, Formatting.Indented);
-            WriteFile(serilizedUsers);
-        }
-
-        /// <summary>
-        /// Записывает тестовый файл.
-        /// </summary>
-        /// <param name="content">Контент для записи в файл.</param>
-        private static void WriteFile(string content)
-        {
-            DBFile dBFile = new DBFile();
-            File.WriteAllText(dBFile.FilePath + dBFile.FileName, content);
-        }
-
-        /// <summary>
-        /// Читает текстовый файл.
-        /// </summary>
-        /// <returns>Строку данных из файла.</returns>
-        private static string ReadFile()
-        {
-            DBFile dBFile = new DBFile();
-            return File.ReadAllText(dBFile.FilePath + dBFile.FileName);
+            DBFile.WriteFile(serilizedUsers);
         }
     }
 }

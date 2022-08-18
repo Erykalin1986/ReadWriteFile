@@ -6,9 +6,27 @@ using System.Threading.Tasks;
 
 namespace Models
 {
-    public class DBFile
+    public static class DBFile
     {
-        public string FileName = "Users.txt";
-        public string FilePath = Path.GetTempPath();
+        public static string FileName = "Users.txt";
+        public static string FilePath = Path.GetTempPath();
+
+        /// <summary>
+        /// Записывает тестовый файл.
+        /// </summary>
+        /// <param name="content">Контент для записи в файл.</param>
+        public static void WriteFile(string content)
+        {
+            File.WriteAllText(FilePath + FileName, content);
+        }
+
+        /// <summary>
+        /// Читает текстовый файл.
+        /// </summary>
+        /// <returns>Строку данных из файла.</returns>
+        public static string ReadFile()
+        {
+            return File.ReadAllText(FilePath + FileName);
+        }
     }
 }

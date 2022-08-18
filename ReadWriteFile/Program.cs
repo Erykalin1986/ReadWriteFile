@@ -2,10 +2,9 @@
 
 bool isWork = true;
 string allCommands = "0 - Вывести всех пользователей;\n1 - Вывести одного пользователя;\n2 - Сохранить пользователя;\n3 - Удалить пользователя;\n4 - Завершить работу программы.";
-DBFile dBFile = new DBFile();
-if (!File.Exists(dBFile.FilePath + dBFile.FileName))
+if (!File.Exists(DBFile.FilePath + DBFile.FileName))
 {
-    FileStream file = File.Create(dBFile.FilePath + dBFile.FileName);
+    FileStream file = File.Create(DBFile.FilePath + DBFile.FileName);
     file.Close();
 }
 User user = new User();
